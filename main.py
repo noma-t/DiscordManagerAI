@@ -1,24 +1,13 @@
-from dotenv import load_dotenv
-from google import genai
 import config
+from bot.bot import DiscordManager
+import discord
+from discord import app_commands
+from discord.ext import commands
 
-load_dotenv()
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="", intents=intents)
 
 
-def main():
-    client = genai.Client(api_key=config.gemini_api_key)
-    model = "gemini-1.5-flash"
-    
-    chat = client.chats.create(model=model)
-    while True:
-        text = input()
-        if text == "exit":
-            break
-
-        response = chat.send_message(text)
-        print(response.text)
-        
-
-if __name__ == "__main__":
-    main()
-    
+cmdgroup_manager = app_commands
