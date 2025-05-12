@@ -1,13 +1,12 @@
 import config
-from bot.bot import DiscordManager
+from bot.gemini_client import GeminiClient
+from bot.discord_bot import DiscordClient, setup_commands
 import discord
-from discord import app_commands
-from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.message_content = True
+discord_client = DiscordClient(intents=intents)
+setup_commands(discord_client)
+gemini_client = GeminiClient(config.GEMINI_API_KEY, config.GEMINI_CHAT_CONFIG)
 
-bot = commands.Bot(command_prefix="", intents=intents)
-
-
-cmdgroup_manager = app_commands
+discord_client.run(config.DISCORD_TOKEN)
